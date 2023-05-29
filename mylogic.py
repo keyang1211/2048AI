@@ -1,15 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  2 00:47:34 2022
+""""
+Logic to build 2048 game. 
 
-@author: HP
-"""
+Initilize new game, functions to slide and merge tiles in game.
 
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar  1 20:31:54 2022
-
-@author: HP
 """
 
 import random
@@ -43,7 +36,7 @@ def check_state(state):
     #if the max value is more than 2048, then win.
     for i in range(len(state)):
         for j in range(len(state[0])):
-            if state[i][j] >= 2048:
+            if state[i][j] >= 9999999:
                 return 'win'
             
     #if there still has blank or there has bricks could be merged,
@@ -54,8 +47,7 @@ def check_state(state):
                 return 'continue' 
     for i in range(len(state)-1):
         for j in range(len(state[0])-1):
-            if state[i][j] == state[i+1][j] \
-            & state[i][j] == state[i][j+1]:
+            if state[i][j] == state[i+1][j] or state[i][j] == state[i][j+1]:
                 return 'continue'
     for i in range(len(state)-1):
         if state[i][len(state[0])-1] == state[i+1][len(state[0])-1]:
@@ -88,7 +80,7 @@ def reverse(state):
 #the compress direction is left(as player press <-)
 def compress(state): 
     #make a empty matrix to save result
-    n = 4 #set the same size of the game
+    n = len(state[0]) #set the same size of the game
     result = [[0 for i in range(n)] for i in range(n)]
     
     #traverse all cells to find out empty block and shift number to the place
@@ -103,12 +95,13 @@ def compress(state):
 
 #let's implement a function to merge to left side, the merge will be located on rows.
 def merge(state):
+    result=deepcopy(state)
     for i in range(len(state)):
         for j in range(len(state[0])-1):
             if(state[i][j] == state[i][j+1] & state[i][j] != 0):
-                state[i][j] = state[i][j] * 2
-                state[i][j+1] = 0
-    return state
+                result[i][j] = state[i][j] * 2
+                result[i][j+1] = 0
+    return result
 
 #implement a function that every move will add a new brick
 

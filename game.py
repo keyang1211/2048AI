@@ -1,10 +1,14 @@
-# -*- coding: utf-8 -*-
 """
-Created on Fri Mar  4 20:49:48 2022
+Run file to manually play 2048 game. 
 
-@author: Ke Yang
+Initialize and run game, using input from user.
+
 """
-from logic import *
+import os
+a=os.path.split(__file__)[0]
+import sys
+sys.path.append(a)
+from mylogic import *
 from copy import deepcopy
 if __name__ == "__main__":
     
